@@ -26,8 +26,8 @@ interface Comparison {
   new: Brief[]; not_seen_again: Brief[]; method: string; caveat: string;
 }
 
-const OPEN = "#33363a";
-const RESOLVED = "#7c8189";
+const OPEN = "#1f5fae";
+const RESOLVED = "#6c9be0"; // validated pair; table view and legend give the contrast relief
 
 export default function HistoryPage() {
   return (
@@ -62,8 +62,7 @@ function SiteHistory() {
 
   return (
     <div className="font-display">
-      <SoftHeader title="Site history"
-        subtitle="Every inspection of a site in date order, and a comparison of any two: what recurred, what is new, and what was not recorded again." />
+      <SoftHeader title="Site history" />
       <div className="mb-5 max-w-md">
         <Field label="Site">{(id) => (
           <select id={id} className={softInput} value={site} onChange={(e) => setSite(e.target.value)} disabled={!sites}>
@@ -84,43 +83,43 @@ function Timeline({ hist }: { hist: History }) {
   const [view, setView] = useState<"chart" | "table">("chart");
   const data = hist.inspections.map((r) => ({ name: `#${r.id}`, title: r.title, date: r.created_at.slice(0, 10), Open: r.open, Resolved: r.resolved }));
   if (!hist.inspections.length) {
-    return <SoftCard className="text-center"><p className="text-xl font-light text-mist-900">No inspections of this site yet</p></SoftCard>;
+    return <SoftCard className="text-center"><p className="text-xl font-bold text-slate-900">No inspections of this site yet</p></SoftCard>;
   }
   return (
     <SoftCard className="mb-5">
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <h2 className="text-2xl font-light text-mist-900">Findings per inspection</h2>
-        <div className="flex rounded-full bg-mist-200 p-1" role="group" aria-label="View">
+        <h2 className="text-2xl font-bold text-slate-900">Findings per inspection</h2>
+        <div className="flex rounded-full bg-slate-200 p-1" role="group" aria-label="View">
           {(["chart", "table"] as const).map((v) => (
             <button key={v} aria-pressed={view === v} onClick={() => setView(v)}
-              className={`min-h-[36px] rounded-full px-4 text-sm capitalize ${view === v ? "bg-mist-900 text-white" : "text-mist-800"}`}>{v}</button>
+              className={`min-h-[36px] rounded-full px-4 text-sm capitalize ${view === v ? "bg-gov-600 text-white" : "text-slate-800"}`}>{v}</button>
           ))}
         </div>
       </div>
-      <p className="mt-1 text-xs text-mist-600">{hist.note}</p>
+      <p className="mt-1 text-xs text-slate-600">{hist.note}</p>
       {view === "chart" ? (
         <div className="mt-4 h-64" role="img" aria-label={`Open and resolved findings for ${data.length} inspections. Switch to table view for the numbers.`}>
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={data} margin={{ top: 8, right: 8, bottom: 0, left: -16 }}>
-              <XAxis dataKey="name" tick={{ fontSize: 12, fill: "#5d6269" }} tickLine={false} axisLine={{ stroke: "#c3c7cc" }} />
-              <YAxis allowDecimals={false} tick={{ fontSize: 12, fill: "#5d6269" }} tickLine={false} axisLine={false} />
-              <Tooltip cursor={{ fill: "#e9ebed" }} contentStyle={{ borderRadius: 14, border: "1px solid #d9dce0", fontSize: 12 }}
+              <XAxis dataKey="name" tick={{ fontSize: 12, fill: "#64748b" }} tickLine={false} axisLine={{ stroke: "#cbd5e1" }} />
+              <YAxis allowDecimals={false} tick={{ fontSize: 12, fill: "#64748b" }} tickLine={false} axisLine={false} />
+              <Tooltip cursor={{ fill: "#eef4fc" }} contentStyle={{ borderRadius: 14, border: "1px solid #dbe7f9", fontSize: 12 }}
                 labelFormatter={(_, p) => (p?.[0] ? `${p[0].payload.title} · ${p[0].payload.date}` : "")} />
               <Legend iconType="circle" wrapperStyle={{ fontSize: 12, color: "#26292c" }} />
-              <Bar dataKey="Open" stackId="f" fill={OPEN} stroke="#f4f5f6" strokeWidth={2} maxBarSize={48} />
-              <Bar dataKey="Resolved" stackId="f" fill={RESOLVED} stroke="#f4f5f6" strokeWidth={2} radius={[4, 4, 0, 0]} maxBarSize={48} />
+              <Bar dataKey="Open" stackId="f" fill={OPEN} stroke="#ffffff" strokeWidth={2} maxBarSize={48} />
+              <Bar dataKey="Resolved" stackId="f" fill={RESOLVED} stroke="#ffffff" strokeWidth={2} radius={[4, 4, 0, 0]} maxBarSize={48} />
             </BarChart>
           </ResponsiveContainer>
         </div>
       ) : (
         <div className="mt-4 overflow-x-auto">
           <table className="w-full text-left text-sm">
-            <thead className="text-xs text-mist-600">
+            <thead className="text-xs text-slate-600">
               <tr><th className="py-2 pr-3 font-normal">Inspection</th><th className="pr-3 font-normal">Date</th><th className="pr-3 font-normal">Status</th><th className="pr-3 text-right font-normal">Photos</th><th className="pr-3 text-right font-normal">Findings</th><th className="pr-3 text-right font-normal">Open</th><th className="pr-3 text-right font-normal">Resolved</th><th className="pr-3 text-right font-normal">Rejected</th><th className="text-right font-normal">Recurring from previous</th></tr>
             </thead>
             <tbody>
               {hist.inspections.map((r) => (
-                <tr key={r.id} className="border-t border-mist-200">
+                <tr key={r.id} className="border-t border-slate-200">
                   <td className="py-2 pr-3"><Link className="underline" href={`/inspect/${r.id}`}>{r.title}</Link></td>
                   <td className="pr-3">{r.created_at.slice(0, 10)}</td>
                   <td className="pr-3">{r.status.replace(/_/g, " ")}</td>
@@ -161,13 +160,13 @@ function Compare({ rows }: { rows: Row[] }) {
 
   return (
     <SoftCard>
-      <h2 className="flex items-center gap-2 text-2xl font-light text-mist-900"><GitCompareArrows className="h-6 w-6" aria-hidden /> Compare two inspections</h2>
+      <h2 className="flex items-center gap-2 text-2xl font-bold text-slate-900"><GitCompareArrows className="h-6 w-6" aria-hidden /> Compare two inspections</h2>
       <div className="mt-4 flex flex-wrap items-end gap-3">
         <div className="min-w-[220px] flex-1"><Field label="Earlier inspection">{(id) => (
           <select id={id} className={softInput} value={before} onChange={(e) => setBefore(e.target.value)}>
             {rows.map((r) => <option key={r.id} value={r.id}>{r.title} · {r.created_at.slice(0, 10)}</option>)}
           </select>)}</Field></div>
-        <ArrowRight className="mb-3 h-5 w-5 text-mist-500" aria-hidden />
+        <ArrowRight className="mb-3 h-5 w-5 text-slate-500" aria-hidden />
         <div className="min-w-[220px] flex-1"><Field label="Later inspection">{(id) => (
           <select id={id} className={softInput} value={after} onChange={(e) => setAfter(e.target.value)}>
             {rows.map((r) => <option key={r.id} value={r.id}>{r.title} · {r.created_at.slice(0, 10)}</option>)}
@@ -188,10 +187,10 @@ function Compare({ rows }: { rows: Row[] }) {
             <div className="overflow-x-auto">
               <table className="w-full text-left text-sm">
                 <caption className="sr-only">Findings by defect type</caption>
-                <thead className="text-xs text-mist-600"><tr><th className="py-2 pr-3 font-normal">Defect type</th><th className="pr-3 text-right font-normal">Before</th><th className="pr-3 text-right font-normal">After</th><th className="pr-3 text-right font-normal">Recurring</th><th className="pr-3 text-right font-normal">New</th><th className="text-right font-normal">Not seen again</th></tr></thead>
+                <thead className="text-xs text-slate-600"><tr><th className="py-2 pr-3 font-normal">Defect type</th><th className="pr-3 text-right font-normal">Before</th><th className="pr-3 text-right font-normal">After</th><th className="pr-3 text-right font-normal">Recurring</th><th className="pr-3 text-right font-normal">New</th><th className="text-right font-normal">Not seen again</th></tr></thead>
                 <tbody>
                   {res.by_class.map((c) => (
-                    <tr key={c.defect_class} className="border-t border-mist-200">
+                    <tr key={c.defect_class} className="border-t border-slate-200">
                       <td className="py-2 pr-3">{c.label}</td><td className="pr-3 text-right">{c.before}</td><td className="pr-3 text-right">{c.after}</td>
                       <td className="pr-3 text-right">{c.recurring}</td><td className="pr-3 text-right">{c.new}</td><td className="text-right">{c.not_seen_again}</td>
                     </tr>
@@ -205,7 +204,7 @@ function Compare({ rows }: { rows: Row[] }) {
             <FindingList title="New" tone="volt" items={res.new} />
             <FindingList title="Not seen again" tone="light" items={res.not_seen_again} />
           </div>
-          <div className="space-y-1 rounded-3xl bg-mist-100 px-4 py-3 text-xs text-mist-700">
+          <div className="space-y-1 rounded-3xl bg-slate-100 px-4 py-3 text-xs text-slate-700">
             <p>{res.method}</p>
             <p><strong>{res.caveat}</strong></p>
           </div>
@@ -216,20 +215,20 @@ function Compare({ rows }: { rows: Row[] }) {
 }
 
 function FindingList({ title, tone, items }: { title: string; tone: "dark" | "volt" | "light"; items: (Brief & { note?: string })[] }) {
-  const head = tone === "dark" ? "bg-mist-900 text-white" : tone === "volt" ? "bg-volt-400 text-mist-900" : "hatch bg-mist-100 text-mist-900";
+  const head = tone === "dark" ? "bg-gov-800 text-white" : tone === "volt" ? "bg-gov-600 text-white" : "hatch bg-white text-gov-800";
   return (
     <section className="overflow-hidden rounded-3xl bg-white" aria-label={title}>
       <h3 className={`flex items-center justify-between px-4 py-2.5 text-sm ${head}`}>{title}<span>{items.length}</span></h3>
       {items.length ? (
-        <ul className="divide-y divide-mist-100">
+        <ul className="divide-y divide-slate-100">
           {items.map((f) => (
             <li key={f.id} className="px-4 py-2.5 text-sm">
-              <Link href={`/findings/${f.id}`} className="text-mist-900 underline">F-{f.id} {f.label}</Link>
-              <p className="text-xs text-mist-600">{FINDING_STATUS[f.status]?.label ?? f.status}{f.note ? ` · ${f.note}` : ""}</p>
+              <Link href={`/findings/${f.id}`} className="text-slate-900 underline">F-{f.id} {f.label}</Link>
+              <p className="text-xs text-slate-600">{FINDING_STATUS[f.status]?.label ?? f.status}{f.note ? ` · ${f.note}` : ""}</p>
             </li>
           ))}
         </ul>
-      ) : <p className="px-4 py-4 text-sm text-mist-500">None</p>}
+      ) : <p className="px-4 py-4 text-sm text-slate-500">None</p>}
     </section>
   );
 }

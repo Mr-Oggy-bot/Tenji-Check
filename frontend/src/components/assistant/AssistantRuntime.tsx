@@ -11,11 +11,11 @@ import { z } from "zod";
 import { api, ApiError, getToken } from "@/lib/api";
 import { BarChartCard, LinkCards, StatCards, TableCard } from "./GenerativeCards";
 
-const DESIGN_SKILL = `Visual style for generated UI: soft grey background (#e9ebed), white or charcoal (#26292c) cards with
-24px rounded corners, generous padding, a geometric sans-serif (system-ui is fine), light-weight large headings.
-Accent: volt yellow #eef21a used as a fill with dark text (#26292c), never as text colour on white. Pill-shaped
-buttons and round icon buttons. Keep text contrast at least 4.5:1, label every control, support keyboard use,
-and make no network requests (no external scripts, fonts or images).`;
+const DESIGN_SKILL = `Visual style for generated UI: a formal public-service look. Light grey-blue background (#eef1f6),
+white cards with 20px rounded corners and soft shadows, Inter or system-ui, bold dark headings (#0f172a).
+Primary colour: blue #0b5cbf for buttons (white text) and accents. Rounded, full-width primary buttons.
+Keep text contrast at least 4.5:1, label every control, support keyboard use, and make no network requests
+(no external scripts, fonts or images).`;
 
 async function call<T>(fn: () => Promise<T>): Promise<T | { error: string }> {
   try {

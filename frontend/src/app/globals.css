@@ -11,27 +11,35 @@ html {
 }
 
 body {
-  background: #d9dce0;
+  background: #eef1f6;
 }
 
-/* Diagonal hatch, used as a texture fill (mockup's "project time" pill) */
+/* Diagonal hatch, used as a texture fill */
 .hatch {
-  background-image: repeating-linear-gradient(135deg, rgba(38, 41, 44, 0.22) 0 1.5px, transparent 1.5px 7px);
+  background-image: repeating-linear-gradient(135deg, rgba(11, 92, 191, 0.18) 0 1.5px, transparent 1.5px 7px);
+}
+
+/* Gentle press feedback for tappable cards and buttons */
+.press {
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.12s ease;
+}
+.press:active {
+  transform: scale(0.98);
 }
 
 /* "Ask TenjiCheck" chat (CopilotKit) themed to the shell */
 [data-copilotkit] {
-  --cpk-default-font-family: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
-  --primary: #26292c;
+  --cpk-default-font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  --primary: #0b5cbf;
   --primary-foreground: #ffffff;
   --radius: 1.25rem;
-  --muted: #e9ebed;
-  --accent: #e9ebed;
-  --border: #d9dce0;
+  --muted: #eef4fc;
+  --accent: #eef4fc;
+  --border: #dbe7f9;
 }
 
 :focus-visible {
-  outline: 2px solid #16a885;
+  outline: 2px solid #0b5cbf;
   outline-offset: 2px;
 }
 

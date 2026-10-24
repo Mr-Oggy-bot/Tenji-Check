@@ -23,9 +23,9 @@ interface Person { id: number; display_name: string }
 
 const STATE: Record<Schedule["state"], { label: string; cls: string }> = {
   overdue: { label: "Overdue", cls: "bg-red-100 text-red-800" },
-  due_soon: { label: "Due soon", cls: "bg-volt-400 text-mist-900" },
-  scheduled: { label: "Scheduled", cls: "bg-mist-200 text-mist-800" },
-  paused: { label: "Paused", cls: "border border-mist-400 text-mist-700" },
+  due_soon: { label: "Due soon", cls: "bg-gov-600 text-white" },
+  scheduled: { label: "Scheduled", cls: "bg-slate-200 text-slate-800" },
+  paused: { label: "Paused", cls: "border border-slate-400 text-slate-700" },
 };
 const CADENCE = [
   { days: 30, label: "Monthly" },
@@ -74,8 +74,7 @@ function Schedules() {
 
   return (
     <div className="font-display">
-      <SoftHeader title="Inspection schedule"
-        subtitle="Recurring inspections per site. Starting one creates an ordinary inspection in the usual capture, review and punch-list workflow, and moves the schedule to its next due date." />
+      <SoftHeader title="Inspection schedule" />
       {err && <p className="mb-4 rounded-2xl bg-red-50 px-4 py-3 text-sm text-red-800" role="alert">{err}</p>}
       {!data && !err && <Spinner />}
       {data && (
@@ -90,36 +89,36 @@ function Schedules() {
             <div className="space-y-3">
               {!data.items.length && (
                 <SoftCard className="text-center">
-                  <p className="text-xl font-light text-mist-900">No schedules yet</p>
-                  <p className="mt-1 text-sm text-mist-600">Create one to have TenjiCheck track when each site is due for its next inspection.</p>
+                  <p className="text-xl font-bold text-slate-900">No schedules yet</p>
+                  <p className="mt-1 text-sm text-slate-600">Create one to have TenjiCheck track when each site is due for its next inspection.</p>
                 </SoftCard>
               )}
               {data.items.map((s) => (
-                <article key={s.id} className="rounded-4xl bg-mist-50 p-5 shadow-soft" aria-label={s.title}>
+                <article key={s.id} className="rounded-3xl bg-slate-50 p-5 shadow-soft" aria-label={s.title}>
                   <div className="flex flex-wrap items-start gap-3">
                     <RoundIcon tone={s.state === "overdue" ? "dark" : s.state === "due_soon" ? "volt" : "light"}><CalendarClock className="h-5 w-5" aria-hidden /></RoundIcon>
                     <div className="min-w-0 flex-1">
-                      <h2 className="text-xl text-mist-900">{s.title}</h2>
-                      <p className="text-sm text-mist-600">{s.project_name}{s.site_name ? ` · ${s.site_name}` : ""}</p>
+                      <h2 className="text-xl text-slate-900">{s.title}</h2>
+                      <p className="text-sm text-slate-600">{s.project_name}{s.site_name ? ` · ${s.site_name}` : ""}</p>
                     </div>
                     <span className={`rounded-full px-3 py-1 text-xs ${STATE[s.state].cls}`}>{STATE[s.state].label}</span>
                   </div>
                   <dl className="mt-4 grid grid-cols-2 gap-3 text-sm sm:grid-cols-4">
-                    <div><dt className="text-xs text-mist-500">Cadence</dt><dd className="text-mist-900">{cadence(s.interval_days)}</dd></div>
-                    <div><dt className="text-xs text-mist-500">Next due</dt><dd className="text-mist-900">{s.next_due}</dd></div>
-                    <div><dt className="text-xs text-mist-500">Status</dt><dd className={s.state === "overdue" ? "text-red-700" : "text-mist-900"}>{s.active ? due(s) : "Paused"}</dd></div>
-                    <div><dt className="text-xs text-mist-500">Contractor</dt><dd className="text-mist-900">{s.contractor || "Unassigned"}</dd></div>
+                    <div><dt className="text-xs text-slate-500">Cadence</dt><dd className="text-slate-900">{cadence(s.interval_days)}</dd></div>
+                    <div><dt className="text-xs text-slate-500">Next due</dt><dd className="text-slate-900">{s.next_due}</dd></div>
+                    <div><dt className="text-xs text-slate-500">Status</dt><dd className={s.state === "overdue" ? "text-red-700" : "text-slate-900"}>{s.active ? due(s) : "Paused"}</dd></div>
+                    <div><dt className="text-xs text-slate-500">Contractor</dt><dd className="text-slate-900">{s.contractor || "Unassigned"}</dd></div>
                   </dl>
-                  {s.notes && <p className="mt-3 text-sm text-mist-700">{s.notes}</p>}
+                  {s.notes && <p className="mt-3 text-sm text-slate-700">{s.notes}</p>}
                   {s.runs.length > 0 && (
                     <details className="mt-3 text-sm">
-                      <summary className="cursor-pointer text-mist-700">{s.runs.length} inspection{s.runs.length === 1 ? "" : "s"} started from this schedule</summary>
+                      <summary className="cursor-pointer text-slate-700">{s.runs.length} inspection{s.runs.length === 1 ? "" : "s"} started from this schedule</summary>
                       <ul className="mt-2 space-y-1">
                         {s.runs.map((r) => (
                           <li key={r.inspection_id} className="flex flex-wrap items-center gap-2">
-                            <Link className="text-mist-900 underline" href={`/inspect/${r.inspection_id}`}>{r.title ?? `Inspection ${r.inspection_id}`}</Link>
-                            <span className="text-xs text-mist-500">started {r.started_at.slice(0, 10)}{r.started_by ? ` by ${r.started_by}` : ""} · due {r.due_at.slice(0, 10)}</span>
-                            <span className={`rounded-full px-2 py-0.5 text-[11px] ${r.on_time ? "bg-mist-200 text-mist-800" : "bg-red-100 text-red-800"}`}>{r.on_time ? "On time" : "Late"}</span>
+                            <Link className="text-slate-900 underline" href={`/inspect/${r.inspection_id}`}>{r.title ?? `Inspection ${r.inspection_id}`}</Link>
+                            <span className="text-xs text-slate-500">started {r.started_at.slice(0, 10)}{r.started_by ? ` by ${r.started_by}` : ""} · due {r.due_at.slice(0, 10)}</span>
+                            <span className={`rounded-full px-2 py-0.5 text-[11px] ${r.on_time ? "bg-slate-200 text-slate-800" : "bg-red-100 text-red-800"}`}>{r.on_time ? "On time" : "Late"}</span>
                           </li>
                         ))}
                       </ul>
@@ -130,7 +129,7 @@ function Schedules() {
                     <PillButton tone="light" disabled={busy === s.id} onClick={() => setActive(s, !s.active)}>
                       {s.active ? <><Pause className="h-4 w-4" aria-hidden /> Pause</> : <><Play className="h-4 w-4" aria-hidden /> Resume</>}
                     </PillButton>
-                    <Link href={`/history?site=${s.project_id}`} className="inline-flex min-h-[44px] items-center rounded-full px-4 text-sm text-mist-800 hover:bg-mist-200">Site history</Link>
+                    <Link href={`/history?site=${s.project_id}`} className="inline-flex min-h-[44px] items-center rounded-full px-4 text-sm text-slate-800 hover:bg-slate-200">Site history</Link>
                   </div>
                 </article>
               ))}
@@ -176,7 +175,7 @@ function NewSchedule({ onCreated }: { onCreated: () => void }) {
 
   return (
     <SoftCard className="h-fit">
-      <h2 className="mb-4 flex items-center gap-2 text-xl font-light text-mist-900"><Plus className="h-5 w-5" aria-hidden /> New schedule</h2>
+      <h2 className="mb-4 flex items-center gap-2 text-xl font-bold text-slate-900"><Plus className="h-5 w-5" aria-hidden /> New schedule</h2>
       <form className="space-y-3" onSubmit={submit}>
         <Field label="Site" required>{(id) => (
           <select id={id} required className={softInput} value={f.project_id}
@@ -191,7 +190,7 @@ function NewSchedule({ onCreated }: { onCreated: () => void }) {
           <div className="flex flex-wrap gap-2">
             {CADENCE.map((c) => (
               <button type="button" key={c.days} aria-pressed={f.interval_days === c.days} onClick={() => setF({ ...f, interval_days: c.days })}
-                className={`min-h-[40px] rounded-full px-4 text-sm ${f.interval_days === c.days ? "bg-mist-900 text-white" : "bg-mist-200 text-mist-900 hover:bg-mist-300"}`}>{c.label}</button>
+                className={`min-h-[40px] rounded-full px-4 text-sm ${f.interval_days === c.days ? "bg-gov-600 text-white" : "bg-slate-200 text-slate-900 hover:bg-slate-300"}`}>{c.label}</button>
             ))}
           </div>
         </fieldset>

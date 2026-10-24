@@ -37,14 +37,14 @@ export function AssistantProvider({ children }: { children: React.ReactNode }) {
       {children}
       {allowed && status?.configured && status.reachable && <AssistantRuntime open={open} onOpenChange={setOpen} role={user!.role} />}
       {allowed && open && !(status?.configured && status.reachable) && (
-        <div role="dialog" aria-label="Ask TenjiCheck" className="fixed bottom-4 right-4 z-[1600] w-[min(380px,calc(100vw-2rem))] rounded-4xl bg-mist-900 p-5 font-display text-white shadow-soft">
+        <div role="dialog" aria-label="Ask TenjiCheck" className="fixed bottom-4 right-4 z-[1600] w-[min(380px,calc(100vw-2rem))] rounded-3xl bg-gov-700 p-5 font-display text-white shadow-soft">
           <div className="flex items-start justify-between gap-3">
-            <p className="flex items-center gap-2 text-lg"><Sparkles className="h-5 w-5 text-volt-400" aria-hidden /> Ask TenjiCheck</p>
+            <p className="flex items-center gap-2 text-lg"><Sparkles className="h-5 w-5 text-gov-300" aria-hidden /> Ask TenjiCheck</p>
             <button onClick={() => setOpen(false)} className="grid h-9 w-9 place-items-center rounded-full bg-white/10 hover:bg-white/20" aria-label="Close assistant">
               <X className="h-4 w-4" />
             </button>
           </div>
-          <p className="mt-3 text-sm text-mist-200">
+          <p className="mt-3 text-sm text-slate-200">
             {failed || (!status ? "Checking the assistant…" : status.configured ? status.reason : "The assistant is off. An administrator can turn it on by setting TC_GITHUB_MODELS_TOKEN (a GitHub token with models:read) in backend/.env and restarting the web server.")}
           </p>
         </div>

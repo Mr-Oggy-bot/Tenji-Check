@@ -100,7 +100,7 @@ function Workspace({ id, user }: { id: number; user: User }) {
     <>
       <PageHeader eyebrow={data.project_name} title={data.title}
         subtitle={<span className="flex flex-wrap items-center gap-2">{data.site_name} <DemoBadge show={data.is_demo} />
-          {handoverDone ? <Badge tone="green">Handover recorded by {data.handover_by} · {fmtDate(data.handover_at)}</Badge> : <Badge tone="slate">Open</Badge>}</span>}
+          {handoverDone ? <Badge tone="green" className="max-w-full !whitespace-normal">Handover recorded by {data.handover_by} · {fmtDate(data.handover_at)}</Badge> : <Badge tone="slate">Open</Badge>}</span>}
         actions={<>
           <Button variant="secondary" onClick={() => downloadFile(`/inspections/${id}/export.csv`, `inspection-${id}.csv`).catch(toast.error)}><Download className="h-4 w-4" /> CSV</Button>
           {reviewer && <Button onClick={punchList} loading={busy === "punch"}><FileText className="h-4 w-4" /> Generate punch list</Button>}

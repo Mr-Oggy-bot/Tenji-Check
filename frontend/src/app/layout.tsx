@@ -1,12 +1,12 @@
 import type { Metadata, Viewport } from "next";
-import { Outfit } from "next/font/google";
+import { Inter } from "next/font/google";
 import { AssistantProvider } from "@/components/assistant/AssistantContext";
 import { AppShell } from "@/components/AppShell";
 import { ToastProvider } from "@/components/toast";
 import { AuthProvider } from "@/lib/auth";
 import "./globals.css";
 
-const outfit = Outfit({ subsets: ["latin"], weight: ["300", "400", "500", "600"], variable: "--font-outfit", display: "swap" });
+const inter = Inter({ subsets: ["latin"], variable: "--font-sans", display: "swap" });
 
 export const metadata: Metadata = {
   title: { default: "TenjiCheck", template: "%s · TenjiCheck" },
@@ -15,11 +15,11 @@ export const metadata: Metadata = {
   icons: { icon: "/icon.svg" },
 };
 
-export const viewport: Viewport = { themeColor: "#26292c", width: "device-width", initialScale: 1 };
+export const viewport: Viewport = { themeColor: "#0b5cbf", width: "device-width", initialScale: 1 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={outfit.variable}>
+    <html lang="en" className={inter.variable}>
       <body className="font-sans text-ink-900 antialiased">
         <AuthProvider>
           <ToastProvider>
