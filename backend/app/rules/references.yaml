@@ -1,0 +1,28 @@
+# Versioned rule references. Clause citations come from the TenjiCheck PRD/TED and must be confirmed by a
+# qualified accessibility reviewer for the target jurisdiction before they are treated as authoritative.
+version: "hg2021-draft-1"
+review_status: "pending review by a qualified accessibility reviewer"
+source: "Harmonised Guidelines and Standards for Universal Accessibility in India 2021 (MoHUA)"
+rules:
+  obstacle_on_path:
+    title: "Obstacle on guide path"
+    reference: "Harmonised Guidelines 2021 §2.6.2, Fig 3.16"
+    condition: "An obstacle (pole, tree, etc.) overlaps the guide corridor"
+    required_fix: "Move the obstacle or re-route the guide path around it"
+  interrupted_path:
+    title: "Interrupted guide path"
+    reference: "Harmonised Guidelines 2021 §3.7–3.9, Fig 3.15"
+    condition: "Gap wider than one tile unit, or a dead-end strip"
+    required_fix: "Install tiles to close the gap"
+  missing_warning_tiles:
+    title: "Missing warning tiles"
+    reference: "Harmonised Guidelines 2021 Image 2.20 & §2.6.2"
+    condition: "No warning/dot band in the tile band nearest the kerb or hazard"
+    required_fix: "Lay a warning tile band before the hazard edge"
+  unassessable:
+    title: "Guide path not assessable from photo"
+    reference: "TenjiCheck fail-safe principle (no measurement without a readable tile grid)"
+    condition: "Tile grid absent, obscured or geometrically unreliable"
+    required_fix: "Verify on site, or retake the photo square to the path in good light"
+gap_threshold_tiles: 1.0
+obstacle_min_width_overlap: 0.15

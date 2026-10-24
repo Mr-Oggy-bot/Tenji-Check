@@ -1,0 +1,20 @@
+# Python
+backend/.venv/
+__pycache__/
+*.pyc
+backend/data/
+backend/.env
+backend/models/*.pt
+backend/models/segformer-*/
+runs/
+
+# Node
+frontend/node_modules/
+frontend/.next/
+frontend/next-env.d.ts
+*.tsbuildinfo
+
+# Outputs
+e2e-screenshots/
+ml/evaluation/reports/*.json
+!ml/evaluation/reports/.gitkeep

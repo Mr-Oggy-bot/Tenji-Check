@@ -1,0 +1,13 @@
+# Example Ultralytics dataset config. Keep only the classes that are actually labelled in your data.
+path: /absolute/path/to/tenjicheck-dataset
+train: images/train
+val: images/val
+test: images/test
+names:
+  0: blocked_tactile_path
+  1: damaged_tactile_tile
+  2: missing_tactile_tile
+  3: interrupted_guidance_path
+  4: warning_tile_present
+  5: directional_tile_present
+  6: ordinary_obstacle

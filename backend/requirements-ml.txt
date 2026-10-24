@@ -1,0 +1,9 @@
+# Optional: pretrained open-vocabulary obstacle detection (YOLO-World) and model training.
+# Install the CPU build of PyTorch first:
+#   pip install torch==2.5.1 torchvision==0.20.1 --index-url https://download.pytorch.org/whl/cpu
+ultralytics==8.3.55
+openai-clip==1.0.1
+ftfy==6.3.1
+regex==2024.11.6
+# Walkable-surface segmentation for the live path planner (SegFormer-b0, ADE20K); fetch weights with scripts/fetch_models.py
+transformers==4.46.3
