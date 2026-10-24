@@ -139,7 +139,7 @@ Training workflow: label images (see `ml/dataset_docs/LABEL_GUIDE.md`) → `make
 
 Recurring inspection schedules (`/schedule`), site history and inspection comparison (`/history`), the restyled
 shell and home page, and the optional "Ask TenjiCheck" CopilotKit assistant (GitHub Models) are described in
-[docs/RELEASE3.md](docs/RELEASE3.md). The tactile route planner is described in [docs/PLANNER.md](docs/PLANNER.md).
+[docs/RELEASE3.md](docs/RELEASE3.md). The tactile route planner is described in [docs/PLANNER.md](docs/PLANNER.md). Deployment (Hugging Face Space, Docker) is in [docs/DEPLOY.md](docs/DEPLOY.md).
 
 ## Configuration
 
