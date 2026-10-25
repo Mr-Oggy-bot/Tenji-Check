@@ -32,7 +32,7 @@ function dueText(s: ScheduleItem) {
 
 function Stat({ label, value, alert }: { label: string; value: React.ReactNode; alert?: boolean }) {
   return (
-    <div className={`rounded-2xl p-4 shadow-soft ${alert ? "bg-gov-600 text-white" : "bg-white text-slate-900"}`}>
+    <div className={`rounded-xl p-4 shadow-soft ${alert ? "bg-gov-600 text-white" : "bg-white text-slate-900"}`}>
       <p className={`text-xs ${alert ? "text-gov-100" : "text-slate-500"}`}>{label}</p>
       <p className="mt-1 text-2xl font-bold">{value}</p>
     </div>
@@ -94,8 +94,8 @@ export default function Home() {
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3 [&>*]:min-w-0">
                 {items.map((s) => (
                   <Link key={s.href} href={s.href}
-                    className="press group flex items-center gap-4 rounded-2xl border border-slate-200/70 bg-white p-4 shadow-soft transition hover:border-gov-200 hover:shadow-md">
-                    <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-gov-50 text-gov-600 transition group-hover:bg-gov-600 group-hover:text-white">
+                    className="press group flex items-center gap-4 rounded-xl border border-slate-200/70 bg-white p-4 shadow-soft transition hover:border-gov-200 hover:shadow-md">
+                    <span className="grid h-11 w-11 shrink-0 place-items-center rounded-lg bg-gov-50 text-gov-600 transition group-hover:bg-gov-600 group-hover:text-white">
                       <s.icon className="h-5 w-5" aria-hidden />
                     </span>
                     <span className="min-w-0 flex-1">
@@ -131,13 +131,13 @@ export default function Home() {
                 <ul className="mt-3 divide-y divide-slate-100">
                   {upcoming.map((s) => (
                     <li key={s.id}>
-                      <Link href="/schedule" className="press flex items-center gap-3 rounded-xl px-1 py-2.5 hover:bg-gov-50">
-                        <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-gov-50 text-gov-600"><CalendarClock className="h-4 w-4" aria-hidden /></span>
+                      <Link href="/schedule" className="press flex items-center gap-3 rounded-lg px-1 py-2.5 hover:bg-gov-50">
+                        <span className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-gov-50 text-gov-600"><CalendarClock className="h-4 w-4" aria-hidden /></span>
                         <span className="min-w-0 flex-1">
                           <span className="block truncate text-sm font-medium text-slate-900">{s.title}</span>
                           <span className="block truncate text-xs text-slate-500">{s.project_name} · {s.next_due} · {dueText(s)}</span>
                         </span>
-                        <span className={`shrink-0 rounded-full px-2.5 py-1 text-[11px] font-medium ${STATE_PILL[s.state]?.cls}`}>{STATE_PILL[s.state]?.label}</span>
+                        <span className={`shrink-0 rounded-md px-2.5 py-1 text-[11px] font-medium ${STATE_PILL[s.state]?.cls}`}>{STATE_PILL[s.state]?.label}</span>
                         <ChevronRight className="h-4 w-4 shrink-0 text-slate-300" aria-hidden />
                       </Link>
                     </li>

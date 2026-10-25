@@ -5,7 +5,7 @@ import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import { Bar, BarChart, LabelList, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
-const card = "my-2 rounded-3xl bg-white p-4 font-display text-slate-900 shadow-soft";
+const card = "my-2 rounded-2xl bg-white p-4 font-display text-slate-900 shadow-soft";
 
 export function StatCards({ title, items }: { title?: string; items?: { label: string; value: string | number; hint?: string }[] }) {
   return (
@@ -13,7 +13,7 @@ export function StatCards({ title, items }: { title?: string; items?: { label: s
       {title && <p className="mb-2 text-sm text-slate-600">{title}</p>}
       <div className="grid grid-cols-2 gap-2">
         {(items ?? []).map((s, i) => (
-          <div key={i} className={`rounded-2xl p-3 ${i === 0 ? "bg-gov-50" : "bg-slate-100"}`}>
+          <div key={i} className={`rounded-xl p-3 ${i === 0 ? "bg-gov-50" : "bg-slate-100"}`}>
             <p className="text-xs text-slate-700">{s.label}</p>
             <p className="text-2xl font-bold">{s.value}</p>
             {s.hint && <p className="text-[11px] text-slate-600">{s.hint}</p>}
@@ -38,8 +38,8 @@ export function BarChartCard({ title, description, unit, data }: { title?: strin
             <BarChart data={rows} margin={{ top: 18, right: 4, bottom: 0, left: -18 }}>
               <XAxis dataKey="label" tick={{ fontSize: 11, fill: "#64748b" }} tickLine={false} axisLine={{ stroke: "#cbd5e1" }} interval={0} />
               <YAxis allowDecimals={false} tick={{ fontSize: 11, fill: "#64748b" }} tickLine={false} axisLine={false} />
-              <Tooltip cursor={{ fill: "#eef4fc" }} formatter={(v) => [`${v}${unit ? ` ${unit}` : ""}`, title]} contentStyle={{ borderRadius: 12, border: "1px solid #dbe7f9", fontSize: 12 }} />
-              <Bar dataKey="value" fill="#0b5cbf" radius={[4, 4, 0, 0]} maxBarSize={40}>
+              <Tooltip cursor={{ fill: "#eef4fc" }} formatter={(v) => [`${v}${unit ? ` ${unit}` : ""}`, title]} contentStyle={{ borderRadius: 8, border: "1px solid #dbe7f9", fontSize: 12 }} />
+              <Bar dataKey="value" fill="#0b5cbf" radius={[2, 2, 0, 0]} maxBarSize={40}>
                 {rows.length <= 8 && <LabelList dataKey="value" position="top" style={{ fontSize: 11, fill: "#26292c" }} />}
               </Bar>
             </BarChart>
@@ -81,12 +81,12 @@ export function LinkCards({ items }: { items?: { label: string; href: string; de
   return (
     <div className="my-2 grid gap-2 font-display">
       {ok.map((i) => (
-        <Link key={i.href + i.label} href={i.href} className="flex items-center justify-between gap-3 rounded-2xl bg-gov-700 px-4 py-3 text-white hover:bg-gov-800">
+        <Link key={i.href + i.label} href={i.href} className="flex items-center justify-between gap-3 rounded-xl bg-gov-700 px-4 py-3 text-white hover:bg-gov-800">
           <span>
             <span className="block text-sm">{i.label}</span>
             {i.description && <span className="block text-xs text-slate-300">{i.description}</span>}
           </span>
-          <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-gov-600 text-white"><ArrowUpRight className="h-4 w-4" aria-hidden /></span>
+          <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-gov-600 text-white"><ArrowUpRight className="h-4 w-4" aria-hidden /></span>
         </Link>
       ))}
     </div>

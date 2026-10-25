@@ -21,15 +21,15 @@ export default function AccountPage() {
   return (
     <div className="mx-auto max-w-xl space-y-4">
       <h1 className="text-2xl font-bold text-slate-900">Account</h1>
-      <section className="flex items-center gap-4 rounded-3xl bg-gov-600 p-5 text-white shadow-soft">
+      <section className="flex items-center gap-4 rounded-2xl bg-gov-600 p-5 text-white shadow-soft">
         <span className="grid h-16 w-16 shrink-0 place-items-center rounded-full bg-white text-xl font-bold text-gov-700" aria-hidden>{initials}</span>
         <div className="min-w-0">
           <p className="truncate text-lg font-semibold">{user.display_name}</p>
           <p className="truncate text-sm text-gov-100">{user.email}</p>
-          <p className="mt-1 inline-block rounded-full bg-white/15 px-2.5 py-0.5 text-xs">{ROLE_LABEL[user.role]}</p>
+          <p className="mt-1 inline-block rounded-md bg-white/15 px-2.5 py-0.5 text-xs">{ROLE_LABEL[user.role]}</p>
         </div>
       </section>
-      <section className="overflow-hidden rounded-3xl bg-white shadow-soft" aria-label="Your services">
+      <section className="overflow-hidden rounded-2xl bg-white shadow-soft" aria-label="Your services">
         <ul className="divide-y divide-slate-100">
           {links.map((s) => (
             <li key={s.href}>
@@ -42,7 +42,7 @@ export default function AccountPage() {
         </ul>
       </section>
       <button onClick={() => { logout(); router.push("/"); }}
-        className="press flex min-h-[52px] w-full items-center justify-center gap-2 rounded-2xl bg-white text-sm font-semibold text-red-700 shadow-soft hover:bg-red-50">
+        className="press flex min-h-[52px] w-full items-center justify-center gap-2 rounded-xl bg-white text-sm font-semibold text-red-700 shadow-soft hover:bg-red-50">
         <LogOut className="h-4 w-4" aria-hidden /> Sign out
       </button>
     </div>

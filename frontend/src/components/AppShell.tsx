@@ -35,7 +35,7 @@ function NavLinks({ role, onNavigate }: { role: Viewer; onNavigate?: () => void 
                       href={i.href}
                       onClick={onNavigate}
                       aria-current={active ? "page" : undefined}
-                      className={`press flex min-h-[42px] items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium transition ${active ? "bg-gov-600 text-white shadow-sm" : "text-slate-600 hover:bg-gov-50 hover:text-gov-700"}`}
+                      className={`press flex min-h-[42px] items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition ${active ? "bg-gov-600 text-white shadow-sm" : "text-slate-600 hover:bg-gov-50 hover:text-gov-700"}`}
                     >
                       <Icon className="h-[18px] w-[18px]" aria-hidden />
                       {i.label}
@@ -84,11 +84,11 @@ function OfflineIndicator() {
   }, [refresh, sync]);
   if (online && queued === 0) return null;
   return (
-    <div className="flex items-center gap-2 rounded-full bg-amber-100 px-3 py-1.5 text-xs font-medium text-amber-900" role="status">
+    <div className="flex items-center gap-2 rounded-md bg-amber-100 px-3 py-1.5 text-xs font-medium text-amber-900" role="status">
       <CloudOff className="h-4 w-4" aria-hidden />
       {!online ? "Offline" : "Online"} · {queued} unsynced
       {online && queued > 0 && (
-        <button onClick={sync} disabled={busy} className="ml-1 rounded-full bg-amber-900 px-2 py-0.5 text-white">
+        <button onClick={sync} disabled={busy} className="ml-1 rounded-md bg-amber-900 px-2 py-0.5 text-white">
           {busy ? "Syncing…" : "Sync now"}
         </button>
       )}
@@ -101,7 +101,7 @@ function AssistantButton() {
   if (!allowed) return null;
   return (
     <button onClick={toggle} aria-expanded={open}
-      className={`press flex min-h-[40px] items-center gap-2 rounded-full px-3 text-sm font-medium transition sm:px-4 ${open ? "bg-gov-600 text-white" : "bg-gov-50 text-gov-700 hover:bg-gov-100"}`}>
+      className={`press flex min-h-[40px] items-center gap-2 rounded-lg px-3 text-sm font-medium transition sm:px-4 ${open ? "bg-gov-600 text-white" : "bg-gov-50 text-gov-700 hover:bg-gov-100"}`}>
       <Sparkles className="h-4 w-4" aria-hidden /> <span className="hidden sm:inline">Ask TenjiCheck</span><span className="sr-only sm:hidden">Ask TenjiCheck</span>
     </button>
   );
@@ -151,18 +151,18 @@ function Notifications({ role }: { role: Viewer }) {
   return (
     <div ref={ref} className="relative">
       <button onClick={() => { setOpen((o) => !o); setNotes(null); }} aria-expanded={open} aria-label="Notifications"
-        className="press grid h-10 w-10 place-items-center rounded-full text-slate-700 hover:bg-gov-50">
+        className="press grid h-10 w-10 place-items-center rounded-lg text-slate-700 hover:bg-gov-50">
         <Bell className="h-5 w-5" />
       </button>
       {open && (
-        <div role="dialog" aria-label="Notifications" className="absolute right-0 top-full z-50 mt-2 w-72 rounded-2xl border border-slate-100 bg-white p-2 shadow-xl">
+        <div role="dialog" aria-label="Notifications" className="absolute right-0 top-full z-50 mt-2 w-72 rounded-xl border border-slate-100 bg-white p-2 shadow-xl">
           <p className="px-3 pb-1 pt-2 text-sm font-semibold text-slate-900">Notifications</p>
           {!notes ? <p className="px-3 py-3 text-sm text-slate-500">Loading…</p> : active.length ? (
             <ul>
               {active.map((n) => (
                 <li key={n.text}>
-                  <Link href={n.href} onClick={() => setOpen(false)} className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-slate-700 hover:bg-gov-50">
-                    <span className="grid h-7 min-w-[28px] place-items-center rounded-full bg-gov-600 px-2 text-xs font-semibold text-white">{n.count}</span>
+                  <Link href={n.href} onClick={() => setOpen(false)} className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-slate-700 hover:bg-gov-50">
+                    <span className="grid h-7 min-w-[28px] place-items-center rounded-lg bg-gov-600 px-2 text-xs font-semibold text-white">{n.count}</span>
                     {n.text}
                   </Link>
                 </li>
@@ -230,7 +230,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
   const brand = (
     <Link href="/" className="flex items-center gap-3" aria-label="TenjiCheck home">
-      <span className="grid h-10 w-10 place-items-center rounded-xl bg-gov-600 text-white shadow-sm">
+      <span className="grid h-10 w-10 place-items-center rounded-lg bg-gov-600 text-white shadow-sm">
         <Footprints className="h-5 w-5" aria-hidden />
       </span>
       <span>
@@ -244,7 +244,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     <div className="flex h-full flex-col border-r border-slate-200 bg-white px-3 py-5">
       <div className="mb-6 px-2">{brand}</div>
       <div className="-mx-1 flex-1 overflow-y-auto px-1">{!loading && <NavLinks role={role} onNavigate={() => setOpen(false)} />}</div>
-      <div className="mt-4 rounded-2xl bg-slate-50 p-3">
+      <div className="mt-4 rounded-xl bg-slate-50 p-3">
         {user ? (
           <div className="flex items-center gap-3">
             <Link href="/account" onClick={() => setOpen(false)} className="flex min-w-0 flex-1 items-center gap-3">
@@ -254,7 +254,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 <span className="block text-xs text-slate-500">{ROLE_LABEL[user.role]}</span>
               </span>
             </Link>
-            <button onClick={logout} className="press grid h-10 w-10 shrink-0 place-items-center rounded-full text-slate-500 hover:bg-white hover:text-slate-900" aria-label="Sign out" title="Sign out">
+            <button onClick={logout} className="press grid h-10 w-10 shrink-0 place-items-center rounded-lg text-slate-500 hover:bg-white hover:text-slate-900" aria-label="Sign out" title="Sign out">
               <LogOut className="h-4 w-4" aria-hidden />
             </button>
           </div>
@@ -276,15 +276,15 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       {open && (
         <div className="fixed inset-0 z-[1500] lg:hidden" role="dialog" aria-modal="true" aria-label="Navigation">
           <div className="absolute inset-0 bg-slate-900/40" onClick={() => setOpen(false)} />
-          <div className="absolute inset-y-0 left-0 w-[19rem] max-w-[85vw] overflow-hidden rounded-r-3xl">{sidebar}</div>
-          <button className="absolute right-4 top-4 grid h-11 w-11 place-items-center rounded-full bg-white" onClick={() => setOpen(false)} aria-label="Close navigation">
+          <div className="absolute inset-y-0 left-0 w-[19rem] max-w-[85vw] overflow-hidden rounded-r-2xl">{sidebar}</div>
+          <button className="absolute right-4 top-4 grid h-11 w-11 place-items-center rounded-lg bg-white" onClick={() => setOpen(false)} aria-label="Close navigation">
             <X className="h-5 w-5" />
           </button>
         </div>
       )}
       <div className="lg:pl-72">
         <header className="sticky top-0 z-30 flex h-16 items-center gap-2 border-b border-slate-200/70 bg-white/90 px-3 backdrop-blur sm:px-6">
-          <button className="press grid h-10 w-10 place-items-center rounded-full text-slate-800 hover:bg-gov-50 lg:hidden" onClick={() => setOpen(true)} aria-label="Open navigation">
+          <button className="press grid h-10 w-10 place-items-center rounded-lg text-slate-800 hover:bg-gov-50 lg:hidden" onClick={() => setOpen(true)} aria-label="Open navigation">
             <Menu className="h-6 w-6" />
           </button>
           <span className="text-base font-bold text-slate-900 lg:hidden">TenjiCheck</span>
@@ -294,12 +294,12 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             <AssistantButton />
             {!loading && <Notifications role={role} />}
             {user ? (
-              <Link href="/account" className="press hidden h-10 items-center gap-2 rounded-full pl-1 pr-3 hover:bg-gov-50 sm:flex" title={ROLE_LABEL[user.role]}>
+              <Link href="/account" className="press hidden h-10 items-center gap-2 rounded-lg pl-1 pr-3 hover:bg-gov-50 sm:flex" title={ROLE_LABEL[user.role]}>
                 <span className="grid h-8 w-8 place-items-center rounded-full bg-gov-600 text-xs font-semibold text-white" aria-hidden>{initials(user.display_name)}</span>
                 <span className="text-xs font-medium text-slate-600">{ROLE_LABEL[user.role]}</span>
               </Link>
             ) : (
-              !loading && <Link href="/login" className="press hidden min-h-[40px] items-center rounded-full bg-gov-600 px-4 text-sm font-semibold text-white sm:flex">Login</Link>
+              !loading && <Link href="/login" className="press hidden min-h-[40px] items-center rounded-lg bg-gov-600 px-4 text-sm font-semibold text-white sm:flex">Login</Link>
             )}
           </div>
         </header>

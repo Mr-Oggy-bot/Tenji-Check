@@ -37,10 +37,10 @@ export function AssistantProvider({ children }: { children: React.ReactNode }) {
       {children}
       {allowed && status?.configured && status.reachable && <AssistantRuntime open={open} onOpenChange={setOpen} role={user!.role} />}
       {allowed && open && !(status?.configured && status.reachable) && (
-        <div role="dialog" aria-label="Ask TenjiCheck" className="fixed bottom-4 right-4 z-[1600] w-[min(380px,calc(100vw-2rem))] rounded-3xl bg-gov-700 p-5 font-display text-white shadow-soft">
+        <div role="dialog" aria-label="Ask TenjiCheck" className="fixed bottom-4 right-4 z-[1600] w-[min(380px,calc(100vw-2rem))] rounded-2xl bg-gov-700 p-5 font-display text-white shadow-soft">
           <div className="flex items-start justify-between gap-3">
             <p className="flex items-center gap-2 text-lg"><Sparkles className="h-5 w-5 text-gov-300" aria-hidden /> Ask TenjiCheck</p>
-            <button onClick={() => setOpen(false)} className="grid h-9 w-9 place-items-center rounded-full bg-white/10 hover:bg-white/20" aria-label="Close assistant">
+            <button onClick={() => setOpen(false)} className="grid h-9 w-9 place-items-center rounded-lg bg-white/10 hover:bg-white/20" aria-label="Close assistant">
               <X className="h-4 w-4" />
             </button>
           </div>

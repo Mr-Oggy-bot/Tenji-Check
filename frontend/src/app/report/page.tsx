@@ -75,17 +75,17 @@ export default function ReportPage() {
   if (done) {
     return (
       <div className="mx-auto max-w-md pt-4">
-        <section className="rounded-[2rem] bg-white px-6 py-10 text-center shadow-soft">
+        <section className="rounded-[1.25rem] bg-white px-6 py-10 text-center shadow-soft">
           <CheckCircle2 className="mx-auto h-14 w-14 text-gov-600" aria-hidden />
           {done.reference ? (
             <>
               <h1 className="mt-4 text-3xl font-extrabold tracking-wide text-slate-900">THANK YOU</h1>
               <p className="mx-auto mt-3 max-w-xs text-slate-500">Your report has been sent to the inspection team. You can check its status with this reference.</p>
               <p className="mt-6 text-xs font-semibold uppercase tracking-wider text-gov-600">Report received</p>
-              <p className="mt-1 select-all rounded-2xl bg-gov-50 py-3 font-mono text-2xl font-bold tracking-wider text-gov-800" aria-live="polite">{done.reference}</p>
+              <p className="mt-1 select-all rounded-xl bg-gov-50 py-3 font-mono text-2xl font-bold tracking-wider text-gov-800" aria-live="polite">{done.reference}</p>
               <div className="mt-8 grid gap-2">
-                <LinkButton href="/" className="min-h-[50px] rounded-2xl text-base">Back to Home</LinkButton>
-                <LinkButton href={`/report/status?ref=${done.reference}`} variant="secondary" className="rounded-2xl">Check status</LinkButton>
+                <LinkButton href="/" className="min-h-[50px] rounded-xl text-base">Back to Home</LinkButton>
+                <LinkButton href={`/report/status?ref=${done.reference}`} variant="secondary" className="rounded-xl">Check status</LinkButton>
                 <button className="mt-1 text-sm font-semibold text-gov-600 hover:underline" onClick={() => { setDone(null); setFile(null); setDesc(""); setConfirmed(false); }}>Report another issue</button>
               </div>
             </>
@@ -93,7 +93,7 @@ export default function ReportPage() {
             <>
               <h1 className="mt-4 text-2xl font-bold text-slate-900">Saved offline</h1>
               <p className="mt-2 text-sm text-slate-500">The report will be sent automatically when you are back online. You will get a reference number then.</p>
-              <LinkButton href="/" className="mt-6 w-full rounded-2xl">Back to Home</LinkButton>
+              <LinkButton href="/" className="mt-6 w-full rounded-xl">Back to Home</LinkButton>
             </>
           )}
         </section>
@@ -112,7 +112,7 @@ export default function ReportPage() {
                 {cats.map((c) => <option key={c.value} value={c.value}>{c.label}</option>)}
               </select>)}</Field>
             <Field label="Photo" required error={errors.file}>{(id) => (
-              <label htmlFor={id} className="press flex min-h-[140px] cursor-pointer flex-col items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-gov-200 bg-gov-50/50 p-3 text-sm font-medium text-gov-700 hover:border-gov-500">
+              <label htmlFor={id} className="press flex min-h-[140px] cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-gov-200 bg-gov-50/50 p-3 text-sm font-medium text-gov-700 hover:border-gov-500">
                 {preview ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img src={preview} alt="Selected photo" className="max-h-64 rounded object-contain" />
@@ -147,7 +147,7 @@ export default function ReportPage() {
             )}
             {errors.loc && <p className="text-sm font-medium text-red-700" role="alert">{errors.loc}</p>}
             <p className="flex items-center gap-1.5 text-xs text-slate-500"><ShieldCheck className="h-4 w-4 shrink-0 text-gov-600" aria-hidden /> Photos are private; faces and number plates are blurred.</p>
-            <Button onClick={submit} loading={busy} className="min-h-[50px] w-full rounded-2xl text-base">Submit report</Button>
+            <Button onClick={submit} loading={busy} className="min-h-[50px] w-full rounded-xl text-base">Submit report</Button>
             <p className="text-center text-xs text-slate-500">Already reported? <Link className="font-semibold text-gov-600 hover:underline" href="/report/status">Track a report</Link></p>
           </div>
         </Card>

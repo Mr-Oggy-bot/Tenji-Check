@@ -32,7 +32,7 @@ body {
   --cpk-default-font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
   --primary: #0b5cbf;
   --primary-foreground: #ffffff;
-  --radius: 1.25rem;
+  --radius: 0.75rem;
   --muted: #eef4fc;
   --accent: #eef4fc;
   --border: #dbe7f9;

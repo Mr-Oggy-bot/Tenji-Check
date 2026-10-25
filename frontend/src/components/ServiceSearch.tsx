@@ -38,16 +38,16 @@ export function ServiceSearch({ viewer, className = "", large = false }: { viewe
           else if (e.key === "Enter" && hits[active]) { e.preventDefault(); go(hits[active].href); }
           else if (e.key === "Escape") setOpen(false);
         }}
-        className={`block w-full rounded-full border border-slate-200 bg-white pl-5 pr-11 text-sm text-slate-900 shadow-soft placeholder:text-slate-400 focus:border-gov-500 focus:outline-none focus:ring-2 focus:ring-gov-500/25 ${large ? "min-h-[52px]" : "min-h-[42px]"}`}
+        className={`block w-full rounded-xl border border-slate-200 bg-white pl-5 pr-11 text-sm text-slate-900 shadow-soft placeholder:text-slate-400 focus:border-gov-500 focus:outline-none focus:ring-2 focus:ring-gov-500/25 ${large ? "min-h-[52px]" : "min-h-[42px]"}`}
       />
       <Search className="pointer-events-none absolute right-4 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-700" aria-hidden />
       {open && (
         <ul id={`${id}-list`} role="listbox" aria-label="Services"
-          className="absolute inset-x-0 top-full z-50 mt-2 max-h-80 overflow-auto rounded-2xl border border-slate-100 bg-white p-1.5 shadow-xl">
+          className="absolute inset-x-0 top-full z-50 mt-2 max-h-80 overflow-auto rounded-xl border border-slate-100 bg-white p-1.5 shadow-xl">
           {hits.length ? hits.map((s, i) => (
             <li key={s.href} id={`${id}-${i}`} role="option" aria-selected={i === active}>
               <button type="button" tabIndex={-1} onMouseEnter={() => setActive(i)} onMouseDown={(e) => e.preventDefault()} onClick={() => go(s.href)}
-                className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-sm ${i === active ? "bg-gov-50 text-gov-800" : "text-slate-700"}`}>
+                className={`flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm ${i === active ? "bg-gov-50 text-gov-800" : "text-slate-700"}`}>
                 <s.icon className="h-4 w-4 text-gov-600" aria-hidden /> {s.label}
               </button>
             </li>

@@ -75,7 +75,7 @@ function Schedules() {
   return (
     <div className="font-display">
       <SoftHeader title="Inspection schedule" />
-      {err && <p className="mb-4 rounded-2xl bg-red-50 px-4 py-3 text-sm text-red-800" role="alert">{err}</p>}
+      {err && <p className="mb-4 rounded-xl bg-red-50 px-4 py-3 text-sm text-red-800" role="alert">{err}</p>}
       {!data && !err && <Spinner />}
       {data && (
         <>
@@ -94,14 +94,14 @@ function Schedules() {
                 </SoftCard>
               )}
               {data.items.map((s) => (
-                <article key={s.id} className="rounded-3xl bg-slate-50 p-5 shadow-soft" aria-label={s.title}>
+                <article key={s.id} className="rounded-2xl bg-slate-50 p-5 shadow-soft" aria-label={s.title}>
                   <div className="flex flex-wrap items-start gap-3">
                     <RoundIcon tone={s.state === "overdue" ? "dark" : s.state === "due_soon" ? "volt" : "light"}><CalendarClock className="h-5 w-5" aria-hidden /></RoundIcon>
                     <div className="min-w-0 flex-1">
                       <h2 className="text-xl text-slate-900">{s.title}</h2>
                       <p className="text-sm text-slate-600">{s.project_name}{s.site_name ? ` · ${s.site_name}` : ""}</p>
                     </div>
-                    <span className={`rounded-full px-3 py-1 text-xs ${STATE[s.state].cls}`}>{STATE[s.state].label}</span>
+                    <span className={`rounded-md px-3 py-1 text-xs ${STATE[s.state].cls}`}>{STATE[s.state].label}</span>
                   </div>
                   <dl className="mt-4 grid grid-cols-2 gap-3 text-sm sm:grid-cols-4">
                     <div><dt className="text-xs text-slate-500">Cadence</dt><dd className="text-slate-900">{cadence(s.interval_days)}</dd></div>
@@ -118,7 +118,7 @@ function Schedules() {
                           <li key={r.inspection_id} className="flex flex-wrap items-center gap-2">
                             <Link className="text-slate-900 underline" href={`/inspect/${r.inspection_id}`}>{r.title ?? `Inspection ${r.inspection_id}`}</Link>
                             <span className="text-xs text-slate-500">started {r.started_at.slice(0, 10)}{r.started_by ? ` by ${r.started_by}` : ""} · due {r.due_at.slice(0, 10)}</span>
-                            <span className={`rounded-full px-2 py-0.5 text-[11px] ${r.on_time ? "bg-slate-200 text-slate-800" : "bg-red-100 text-red-800"}`}>{r.on_time ? "On time" : "Late"}</span>
+                            <span className={`rounded-md px-2 py-0.5 text-[11px] ${r.on_time ? "bg-slate-200 text-slate-800" : "bg-red-100 text-red-800"}`}>{r.on_time ? "On time" : "Late"}</span>
                           </li>
                         ))}
                       </ul>
@@ -129,7 +129,7 @@ function Schedules() {
                     <PillButton tone="light" disabled={busy === s.id} onClick={() => setActive(s, !s.active)}>
                       {s.active ? <><Pause className="h-4 w-4" aria-hidden /> Pause</> : <><Play className="h-4 w-4" aria-hidden /> Resume</>}
                     </PillButton>
-                    <Link href={`/history?site=${s.project_id}`} className="inline-flex min-h-[44px] items-center rounded-full px-4 text-sm text-slate-800 hover:bg-slate-200">Site history</Link>
+                    <Link href={`/history?site=${s.project_id}`} className="inline-flex min-h-[44px] items-center rounded-lg px-4 text-sm text-slate-800 hover:bg-slate-200">Site history</Link>
                   </div>
                 </article>
               ))}
@@ -190,7 +190,7 @@ function NewSchedule({ onCreated }: { onCreated: () => void }) {
           <div className="flex flex-wrap gap-2">
             {CADENCE.map((c) => (
               <button type="button" key={c.days} aria-pressed={f.interval_days === c.days} onClick={() => setF({ ...f, interval_days: c.days })}
-                className={`min-h-[40px] rounded-full px-4 text-sm ${f.interval_days === c.days ? "bg-gov-600 text-white" : "bg-slate-200 text-slate-900 hover:bg-slate-300"}`}>{c.label}</button>
+                className={`min-h-[40px] rounded-lg px-4 text-sm ${f.interval_days === c.days ? "bg-gov-600 text-white" : "bg-slate-200 text-slate-900 hover:bg-slate-300"}`}>{c.label}</button>
             ))}
           </div>
         </fieldset>

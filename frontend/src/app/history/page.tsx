@@ -71,7 +71,7 @@ function SiteHistory() {
           </select>
         )}</Field>
       </div>
-      {err && <p className="mb-4 rounded-2xl bg-red-50 px-4 py-3 text-sm text-red-800" role="alert">{err}</p>}
+      {err && <p className="mb-4 rounded-xl bg-red-50 px-4 py-3 text-sm text-red-800" role="alert">{err}</p>}
       {site && !hist && !err && <Spinner />}
       {hist && <Timeline hist={hist} />}
       {hist && hist.inspections.length >= 2 && <Compare rows={hist.inspections} />}
@@ -89,10 +89,10 @@ function Timeline({ hist }: { hist: History }) {
     <SoftCard className="mb-5">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <h2 className="text-2xl font-bold text-slate-900">Findings per inspection</h2>
-        <div className="flex rounded-full bg-slate-200 p-1" role="group" aria-label="View">
+        <div className="flex rounded-lg bg-slate-200 p-1" role="group" aria-label="View">
           {(["chart", "table"] as const).map((v) => (
             <button key={v} aria-pressed={view === v} onClick={() => setView(v)}
-              className={`min-h-[36px] rounded-full px-4 text-sm capitalize ${view === v ? "bg-gov-600 text-white" : "text-slate-800"}`}>{v}</button>
+              className={`min-h-[36px] rounded-lg px-4 text-sm capitalize ${view === v ? "bg-gov-600 text-white" : "text-slate-800"}`}>{v}</button>
           ))}
         </div>
       </div>
@@ -103,11 +103,11 @@ function Timeline({ hist }: { hist: History }) {
             <BarChart data={data} margin={{ top: 8, right: 8, bottom: 0, left: -16 }}>
               <XAxis dataKey="name" tick={{ fontSize: 12, fill: "#64748b" }} tickLine={false} axisLine={{ stroke: "#cbd5e1" }} />
               <YAxis allowDecimals={false} tick={{ fontSize: 12, fill: "#64748b" }} tickLine={false} axisLine={false} />
-              <Tooltip cursor={{ fill: "#eef4fc" }} contentStyle={{ borderRadius: 14, border: "1px solid #dbe7f9", fontSize: 12 }}
+              <Tooltip cursor={{ fill: "#eef4fc" }} contentStyle={{ borderRadius: 8, border: "1px solid #dbe7f9", fontSize: 12 }}
                 labelFormatter={(_, p) => (p?.[0] ? `${p[0].payload.title} · ${p[0].payload.date}` : "")} />
               <Legend iconType="circle" wrapperStyle={{ fontSize: 12, color: "#26292c" }} />
               <Bar dataKey="Open" stackId="f" fill={OPEN} stroke="#ffffff" strokeWidth={2} maxBarSize={48} />
-              <Bar dataKey="Resolved" stackId="f" fill={RESOLVED} stroke="#ffffff" strokeWidth={2} radius={[4, 4, 0, 0]} maxBarSize={48} />
+              <Bar dataKey="Resolved" stackId="f" fill={RESOLVED} stroke="#ffffff" strokeWidth={2} radius={[2, 2, 0, 0]} maxBarSize={48} />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -174,7 +174,7 @@ function Compare({ rows }: { rows: Row[] }) {
         <PillButton tone="dark" loading={busy} disabled={before === after} onClick={run}>Compare</PillButton>
       </div>
       {reversed && <p className="mt-2 text-xs text-amber-800">The &ldquo;earlier&rdquo; inspection is newer than the &ldquo;later&rdquo; one; results are read in that order.</p>}
-      {err && <p className="mt-3 rounded-2xl bg-red-50 px-4 py-3 text-sm text-red-800" role="alert">{err}</p>}
+      {err && <p className="mt-3 rounded-xl bg-red-50 px-4 py-3 text-sm text-red-800" role="alert">{err}</p>}
       {res && (
         <div className="mt-5 space-y-5">
           <div className="grid grid-cols-2 gap-x-3 gap-y-1 sm:grid-cols-4" aria-label="Comparison totals">
@@ -204,7 +204,7 @@ function Compare({ rows }: { rows: Row[] }) {
             <FindingList title="New" tone="volt" items={res.new} />
             <FindingList title="Not seen again" tone="light" items={res.not_seen_again} />
           </div>
-          <div className="space-y-1 rounded-3xl bg-slate-100 px-4 py-3 text-xs text-slate-700">
+          <div className="space-y-1 rounded-2xl bg-slate-100 px-4 py-3 text-xs text-slate-700">
             <p>{res.method}</p>
             <p><strong>{res.caveat}</strong></p>
           </div>
@@ -217,7 +217,7 @@ function Compare({ rows }: { rows: Row[] }) {
 function FindingList({ title, tone, items }: { title: string; tone: "dark" | "volt" | "light"; items: (Brief & { note?: string })[] }) {
   const head = tone === "dark" ? "bg-gov-800 text-white" : tone === "volt" ? "bg-gov-600 text-white" : "hatch bg-white text-gov-800";
   return (
-    <section className="overflow-hidden rounded-3xl bg-white" aria-label={title}>
+    <section className="overflow-hidden rounded-2xl bg-white" aria-label={title}>
       <h3 className={`flex items-center justify-between px-4 py-2.5 text-sm ${head}`}>{title}<span>{items.length}</span></h3>
       {items.length ? (
         <ul className="divide-y divide-slate-100">

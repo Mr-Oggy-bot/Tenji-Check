@@ -26,7 +26,7 @@ export function Button({
     <button
       {...props}
       disabled={props.disabled || loading}
-      className={`press inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold transition focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ${BTN[variant]} ${className}`}
+      className={`press inline-flex min-h-[44px] items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ${BTN[variant]} ${className}`}
     >
       {loading && <Loader2 className="h-4 w-4 animate-spin" aria-hidden />}
       {children}
@@ -36,7 +36,7 @@ export function Button({
 
 export function LinkButton({ href, variant = "primary", children, className = "" }: { href: string; variant?: BtnVariant; children: React.ReactNode; className?: string }) {
   return (
-    <Link href={href} className={`press inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold transition focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${BTN[variant]} ${className}`}>
+    <Link href={href} className={`press inline-flex min-h-[44px] items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${BTN[variant]} ${className}`}>
       {children}
     </Link>
   );
@@ -44,7 +44,7 @@ export function LinkButton({ href, variant = "primary", children, className = ""
 
 export function Card({ children, className = "", title, actions }: { children: React.ReactNode; className?: string; title?: React.ReactNode; actions?: React.ReactNode }) {
   return (
-    <section className={`rounded-2xl border border-slate-200/70 bg-white shadow-soft ${className}`}>
+    <section className={`rounded-xl border border-slate-200/70 bg-white shadow-soft ${className}`}>
       {(title || actions) && (
         <header className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 px-5 py-3.5">
           {title && <h2 className="text-base font-semibold text-ink-900">{title}</h2>}
@@ -67,7 +67,7 @@ const TONE: Record<Tone, string> = {
 };
 
 export function Badge({ tone = "slate", children, className = "" }: { tone?: Tone; children: React.ReactNode; className?: string }) {
-  return <span className={`inline-flex items-center gap-1 whitespace-nowrap rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset ${TONE[tone]} ${className}`}>{children}</span>;
+  return <span className={`inline-flex items-center gap-1 whitespace-nowrap rounded-md px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset ${TONE[tone]} ${className}`}>{children}</span>;
 }
 
 export function StatusBadge({ status, map }: { status: string; map: Record<string, { label: string; tone: Tone }> }) {
@@ -94,7 +94,7 @@ export function Field({ label, hint, error, children, required }: { label: strin
 }
 
 export const inputCls =
-  "block w-full min-h-[44px] rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm text-ink-900 shadow-sm placeholder:text-slate-400 focus:border-gov-500 focus:outline-none focus:ring-2 focus:ring-gov-500/25";
+  "block w-full min-h-[44px] rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm text-ink-900 shadow-sm placeholder:text-slate-400 focus:border-gov-500 focus:outline-none focus:ring-2 focus:ring-gov-500/25";
 
 export function Spinner({ label = "Loading" }: { label?: string }) {
   return (
@@ -106,7 +106,7 @@ export function Spinner({ label = "Loading" }: { label?: string }) {
 
 export function EmptyState({ title, children, action }: { title: string; children?: React.ReactNode; action?: React.ReactNode }) {
   return (
-    <div className="flex flex-col items-center rounded-2xl border border-dashed border-gov-200 bg-gov-50/40 px-6 py-10 text-center">
+    <div className="flex flex-col items-center rounded-xl border border-dashed border-gov-200 bg-gov-50/40 px-6 py-10 text-center">
       <Inbox className="mb-2 h-8 w-8 text-gov-300" aria-hidden />
       <p className="font-medium text-ink-900">{title}</p>
       {children && <div className="mt-1 max-w-md text-sm text-slate-500">{children}</div>}
@@ -167,7 +167,7 @@ export function Modal({ open, onClose, title, children, footer }: { open: boolea
         role="dialog"
         aria-modal="true"
         aria-label={title}
-        className="max-h-[92vh] w-full overflow-y-auto rounded-t-3xl bg-white shadow-xl sm:max-w-lg sm:rounded-3xl"
+        className="max-h-[92vh] w-full overflow-y-auto rounded-t-2xl bg-white shadow-xl sm:max-w-lg sm:rounded-2xl"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between border-b px-5 py-3">
@@ -186,7 +186,7 @@ export function Modal({ open, onClose, title, children, footer }: { open: boolea
 export function Stat({ label, value, hint, tone }: { label: string; value: React.ReactNode; hint?: string; tone?: "teal" | "amber" | "red" }) {
   const c = tone === "teal" ? "text-teal-700" : tone === "amber" ? "text-amber-700" : tone === "red" ? "text-red-700" : "text-ink-900";
   return (
-    <div className="rounded-2xl border border-slate-200/70 bg-white p-4 shadow-soft">
+    <div className="rounded-xl border border-slate-200/70 bg-white p-4 shadow-soft">
       <p className="text-xs font-medium uppercase tracking-wide text-slate-500">{label}</p>
       <p className={`mt-1 text-2xl font-bold ${c}`}>{value}</p>
       {hint && <p className="mt-1 text-xs text-slate-500">{hint}</p>}
