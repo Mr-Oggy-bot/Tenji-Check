@@ -5,50 +5,65 @@ import path from "node:path";
 export const BACKEND = process.env.BACKEND_URL || "http://127.0.0.1:8000";
 const ROLES = new Set(["admin", "inspector", "engineer", "contractor"]);
 
-/** TC_GITHUB_MODELS_TOKEN from the environment, else from backend/.env so the token is configured in one place. */
-export function githubModels(): { token: string; model: string } {
-  let token = process.env.TC_GITHUB_MODELS_TOKEN || "";
-  let model = process.env.TC_GITHUB_MODELS_MODEL || "";
-  if (!token) {
-    try {
-      const env = readFileSync(process.env.TC_BACKEND_ENV_FILE || path.join(process.cwd(), "..", "backend", ".env"), "utf8");
-      for (const line of env.split(/\r?\n/)) {
-        const m = /^\s*(TC_GITHUB_MODELS_TOKEN|TC_GITHUB_MODELS_MODEL)\s*=\s*(.*?)\s*$/.exec(line);
-        if (!m) continue;
-        const v = m[2].replace(/^["']|["']$/g, "");
-        if (m[1] === "TC_GITHUB_MODELS_TOKEN") token = v;
-        else if (!model) model = v;
-      }
-    } catch {
-      /* no backend/.env: not configured */
-    }
-  }
-  return { token, model: model || "openai/gpt-4.1-mini" };
+export interface AssistantConfig {
+  baseURL: string; // any OpenAI-compatible chat-completions endpoint, e.g. a local Ollama server
+  apiKey: string;
+  model: string;
+  provider: string; // label shown to users
+  generativeUI: boolean; // sandboxed generated UI needs a strong model; off by default for small local ones
+  toolCallShim: boolean; // convert tool calls that a local model writes as plain JSON (see toolcall-shim.ts)
 }
 
-let probe: { at: number; ok: boolean; reason: string } | null = null;
+const KEYS = ["TC_ASSISTANT_BASE_URL", "TC_ASSISTANT_API_KEY", "TC_ASSISTANT_MODEL", "TC_ASSISTANT_PROVIDER", "TC_ASSISTANT_GENERATIVE_UI", "TC_ASSISTANT_TOOL_SHIM"] as const;
 
-/** Checks (cached 5 min if it works, 30 s if not) that GitHub Models really answers. Some networks return a bare "200 OK" for it. */
-export async function probeGithubModels(token: string, model: string): Promise<{ ok: boolean; reason: string }> {
-  if (probe && Date.now() - probe.at < (probe.ok ? 5 * 60_000 : 30_000)) return probe;
+/** Assistant settings from the environment, else from backend/.env so they are configured in one place. */
+export function assistantConfig(): AssistantConfig | null {
+  const v: Record<string, string> = {};
+  for (const k of KEYS) if (process.env[k]) v[k] = process.env[k]!;
+  try {
+    const env = readFileSync(process.env.TC_BACKEND_ENV_FILE || path.join(process.cwd(), "..", "backend", ".env"), "utf8");
+    for (const line of env.split(/\r?\n/)) {
+      const m = /^\s*([A-Z_]+)\s*=\s*(.*?)\s*$/.exec(line);
+      if (m && (KEYS as readonly string[]).includes(m[1]) && !(m[1] in v)) v[m[1]] = m[2].replace(/^["']|["']$/g, "");
+    }
+  } catch {
+    /* no backend/.env */
+  }
+  if (!v.TC_ASSISTANT_BASE_URL || !v.TC_ASSISTANT_MODEL) return null;
+  return {
+    baseURL: v.TC_ASSISTANT_BASE_URL.replace(/\/+$/, ""),
+    apiKey: v.TC_ASSISTANT_API_KEY || "not-needed",
+    model: v.TC_ASSISTANT_MODEL,
+    provider: v.TC_ASSISTANT_PROVIDER || "AI model",
+    generativeUI: /^(1|true|yes)$/i.test(v.TC_ASSISTANT_GENERATIVE_UI || ""),
+    toolCallShim: /^(1|true|yes)$/i.test(v.TC_ASSISTANT_TOOL_SHIM || ""),
+  };
+}
+
+let probe: { at: number; key: string; ok: boolean; reason: string } | null = null;
+
+/** Checks (cached 5 min if it works, 30 s if not) that the model server answers and has the configured model. */
+export async function probeAssistant(cfg: AssistantConfig): Promise<{ ok: boolean; reason: string }> {
+  const key = `${cfg.baseURL}|${cfg.model}`;
+  if (probe && probe.key === key && Date.now() - probe.at < (probe.ok ? 5 * 60_000 : 30_000)) return probe;
   let ok = false;
   let reason = "";
   try {
-    const r = await fetch("https://models.github.ai/inference/chat/completions", {
-      method: "POST", cache: "no-store", signal: AbortSignal.timeout(15_000),
-      headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
-      body: JSON.stringify({ model, max_tokens: 1, messages: [{ role: "user", content: "ping" }] }),
+    const r = await fetch(`${cfg.baseURL}/models`, {
+      cache: "no-store", signal: AbortSignal.timeout(8_000), headers: { Authorization: `Bearer ${cfg.apiKey}` },
     });
     const type = r.headers.get("content-type") || "";
-    if (r.status === 401 || r.status === 403) reason = "GitHub Models rejected the token (it needs the models:read permission).";
-    else if (r.status === 429) reason = "GitHub Models rate limit reached. Try again later.";
-    else if (!type.includes("json")) reason = "GitHub Models is not reachable from this network: it answered with a non-API response. A VPN, firewall or filtering service (e.g. Cloudflare WARP or a campus network) is intercepting it.";
-    else if (!r.ok) reason = `GitHub Models returned HTTP ${r.status}.`;
-    else ok = true;
+    if (r.status === 401 || r.status === 403) reason = `${cfg.provider} rejected the API key.`;
+    else if (!r.ok || !type.includes("json")) reason = `${cfg.provider} returned an unexpected response (HTTP ${r.status}).`;
+    else {
+      const ids: string[] = ((await r.json()).data ?? []).map((m: { id: string }) => m.id);
+      if (ids.length && !ids.includes(cfg.model)) reason = `${cfg.provider} does not have the model "${cfg.model}".`;
+      else ok = true;
+    }
   } catch {
-    reason = "Could not reach GitHub Models from the server.";
+    reason = `${cfg.provider} is not running or not reachable at ${cfg.baseURL}.`;
   }
-  probe = { at: Date.now(), ok, reason };
+  probe = { at: Date.now(), key, ok, reason };
   return probe;
 }
 

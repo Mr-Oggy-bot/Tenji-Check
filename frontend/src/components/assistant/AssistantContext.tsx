@@ -45,7 +45,7 @@ export function AssistantProvider({ children }: { children: React.ReactNode }) {
             </button>
           </div>
           <p className="mt-3 text-sm text-slate-200">
-            {failed || (!status ? "Checking the assistant…" : status.configured ? status.reason : "The assistant is off. An administrator can turn it on by setting TC_GITHUB_MODELS_TOKEN (a GitHub token with models:read) in backend/.env and restarting the web server.")}
+            {failed || (!status ? "Checking the assistant…" : status.configured ? status.reason : "The assistant is off. An administrator can turn it on by setting TC_ASSISTANT_BASE_URL and TC_ASSISTANT_MODEL in backend/.env (for example a local Ollama server).")}
           </p>
         </div>
       )}

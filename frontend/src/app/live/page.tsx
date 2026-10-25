@@ -396,11 +396,11 @@ function LivePlanner() {
                 <Save className="h-4 w-4" aria-hidden /> Save to survey
               </Button>
               <Button variant="secondary" disabled={!result || !status?.github_models.configured} loading={opinionBusy} onClick={secondOpinion}
-                title={status?.github_models.configured ? `Ask ${status.github_models.model} on GitHub Models` : "Set TC_GITHUB_MODELS_TOKEN on the backend to enable"}>
+                title={status?.github_models.configured ? `Ask ${status.github_models.model} on GitHub Models` : "Unavailable: GitHub retired GitHub Models in July 2026"}>
                 <Sparkles className="h-4 w-4" aria-hidden /> AI second opinion
               </Button>
               {status && !status.github_models.configured && (
-                <span className="text-xs text-slate-500">Second opinion needs a GitHub Models token on the server.</span>
+                <span className="text-xs text-slate-500">Second opinion is unavailable: it used GitHub Models, which GitHub retired in July 2026.</span>
               )}
             </div>
             <ul className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-xs text-slate-600" aria-label="Overlay legend">
